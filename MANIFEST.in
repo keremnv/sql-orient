@@ -1,0 +1,10 @@
+include README.md LICENSE NOTICE ATTRIBUTION.md CONTRIBUTING.md .gitignore
+include .github/workflows/ci.yml
+recursive-include src/sql_orient *.py
+recursive-include tests *.py *.json
+recursive-include examples *.sql
+recursive-include docs *.md *.svg
+recursive-include evidence *.json
+recursive-include scripts *.py
+exclude src/sql_orient.egg-info/*
+global-exclude *.pyc

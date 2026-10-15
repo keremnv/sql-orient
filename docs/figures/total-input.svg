@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="390" viewBox="0 0 800 390" role="img" aria-labelledby="title desc">
+<title id="title">Total input tokens per session</title>
+<desc id="desc">Source-only: 1,721,255; Native Graphify: 1,637,750; sql_orient: 1,449,205. One selected task, 12 blocks; amended set, six environment-failed sessions replaced post hoc in two rounds. No general efficiency or monetary savings established.</desc>
+<rect width="800" height="390" fill="white"/>
+<g font-family="sans-serif" fill="#172033" font-size="18">
+<text x="20" y="30">Total input tokens per session</text>
+<text x="20" y="75">Source-only: 1,721,255</text>
+<rect x="20" y="85" width="430.314" height="22" fill="#365da8"/>
+<text x="20" y="145">Native Graphify: 1,637,750</text>
+<rect x="20" y="155" width="409.438" height="22" fill="#365da8"/>
+<text x="20" y="215">sql_orient: 1,449,205</text>
+<rect x="20" y="225" width="362.301" height="22" fill="#365da8"/>
+<text x="20" y="290" font-size="16">D1: one selected Dulwich task; 12 sessions per arm.</text>
+<text x="20" y="315" font-size="16">36 patches passed; six environment failures replaced in two rounds.</text>
+<text x="20" y="340" font-size="16">Preregistered comparison unidentified; total interval includes zero.</text>
+<text x="20" y="365" font-size="16">Uncached findings exploratory; no general efficiency or savings claim.</text>
+</g>
+</svg>

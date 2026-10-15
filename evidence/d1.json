@@ -1,0 +1,40 @@
+{
+  "format_version": 1,
+  "study": "D1",
+  "selected_tasks": 1,
+  "blocks": 12,
+  "original_sessions_completed": 30,
+  "replaced_infrastructure_failures": 6,
+  "replacement_rounds": [
+    4,
+    2
+  ],
+  "replacements_reclassified_from_agent_timeout": 2,
+  "patches_passed_frozen_checks": 36,
+  "preregistered_comparison_identified": false,
+  "arms": [
+    {
+      "label": "Source-only",
+      "sessions": 12,
+      "total_input_sum": 20655065,
+      "uncached_input_sum": 1129689
+    },
+    {
+      "label": "Native Graphify",
+      "sessions": 12,
+      "total_input_sum": 19653004,
+      "uncached_input_sum": 1253260
+    },
+    {
+      "label": "sql_orient",
+      "sessions": 12,
+      "total_input_sum": 17390462,
+      "uncached_input_sum": 1065342
+    }
+  ],
+  "sql_minus_graphify_total_nominal_95_interval": [
+    -426146.87342297187,
+    49056.540089638554
+  ],
+  "interval_definition": "Nominal 95% t-interval (11 degrees of freedom) for the mean within-block paired difference in total input tokens per session, sql_orient minus Native Graphify, over the 12 amended blocks; retained from the primary analysis, not recomputable from the sums above."
+}
