@@ -1,6 +1,6 @@
 # SQLite schema 2
 
-The importer creates `meta`, `g_nodes`, `g_edges`, `s_documents`, `s_occurrences`, `s_symbols` and `links`. Inspect columns with `PRAGMA table_info(g_nodes)` or another table name. Node IDs are producer identities; edge IDs preserve input order and duplicate edges. Extra fields are JSON in `attrs`; symbol documentation and relationships are stored as JSON text.
+The importer creates `meta`, `g_nodes`, `g_edges`, `s_documents`, `s_occurrences`, `s_symbols` and `links`. Inspect columns with `PRAGMA table_info(g_nodes)` or another table name. Node IDs are producer identities; edge IDs preserve input order and duplicate edges. `g_edges` is filled from the Graphify `links` array (clustered export) or `edges` array (raw `--no-cluster` export); a file whose `links` and `edges` differ is rejected. Edge `source` and `target` must be strings, and `relation` a string when present. Extra fields are JSON in `attrs`, including Graphify's `_src`/`_tgt` direction markers when present; `source` and `target` are stored as exported. Symbol documentation and relationships are stored as JSON text.
 
 Historical `codeindex.version` and `codeindex.schema_version` metadata keys remain database API contracts. Schema version is 2; coordinate normalization version is 1. There is no compatibility Python package or command. Old databases are queried without rewriting their schema or correcting historical coordinates.
 

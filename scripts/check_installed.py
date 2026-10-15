@@ -32,12 +32,20 @@ def main():
         run([python,'-m','pip','install','--no-deps',wheel])
         shutil.copytree(ROOT/'tests/fixtures/mini',work/'mini')
         shutil.copyfile(ROOT/'examples/callers.sql',work/'callers.sql')
+        shutil.copyfile(ROOT/'examples/relationships.sql',work/'relationships.sql')
         assert not (work/'env/bin/codeindex').exists()
         run([python,'-c',"import importlib.util; import sql_orient; assert importlib.util.find_spec('codeindex') is None; assert 'site-packages' in sql_orient.__file__"])
         for name, extra in [('graph',[]),('paired',['--scip','mini/scip.json'])]:
             run([cli,'build','--repo','mini/repo','--graph','mini/graph.json','--db',name+'.db',*extra])
             p=run([cli,'sql','--db',name+'.db','--file','callers.sql'])
             assert p.stdout == 'caller\trelation\ttarget\nbeta()\tcalls\talpha()\nbeta()\tcalls\talpha()\n'
+            p=run([cli,'sql','--db',name+'.db','--file','relationships.sql'])  # README example
+            assert p.stdout == ('direction\tsource\trelation\ttarget\tsource_file\tsource_location\n'
+                                'incoming\tbeta()\tcalls\talpha()\tmod_b.py\tL6\n'
+                                'incoming\tbeta()\tcalls\talpha()\tmod_b.py\tL6\n'
+                                'outgoing\talpha()\tcalls\thelper()\tmod_a.py\tL6\n')
+            p=run([cli,'sql','--db',name+'.db','--file','relationships.sql','--format','json','--max-rows','2'])
+            assert json.loads(p.stdout)['delivery']['more_rows'] and json.loads(p.stdout)['delivery']['limit_reason'] == 'max_rows'
             p=run([cli,'sql','--db',name+'.db','--query','SELECT COUNT(*) AS n FROM g_nodes','--format','json'])
             assert json.loads(p.stdout)['rows'] == [[15]]
             p=run([cli,'sql','--db',name+'.db','--query','SELECT id FROM g_nodes ORDER BY id','--format','json','--max-rows','1'])

@@ -56,9 +56,20 @@ def main():
     evidence = (ROOT/'docs/evidence.md').read_text()
     assert f'{whole(Decimal(low))} to {whole(Decimal(high))}' in evidence, 'documented interval differs'
     readme = (ROOT/'README.md').read_text()
+    pypi = (ROOT/'PYPI_README.md').read_text()
+    interval = f'{whole(Decimal(low))} to +{whole(Decimal(high))}'
+    assert interval in readme and interval in pypi, 'README interval differs'
+    mean = {a['label']: {m: Decimal(a[m+'_sum'])/a['sessions'] for m in ('total_input','uncached_input')} for a in data['arms']}
+    paired = (mean['sql_orient']['total_input'] - mean['Native Graphify']['total_input'])
+    assert abs(paired - (Decimal(low) + Decimal(high))/2) < 1, 'interval is not centred on the mean paired difference'
+    pct = lambda a, b, m: f'{(1 - mean[a][m]/mean[b][m]) * 100:.1f}%'
+    claims = [f'mean paired difference of {whole(paired)}', pct('sql_orient','Native Graphify','total_input')+' lower',
+              pct('sql_orient','Source-only','total_input')+' lower', pct('sql_orient','Native Graphify','uncached_input')+' below',
+              pct('sql_orient','Source-only','uncached_input')+' below']
+    assert all(c in readme for c in claims), 'README derived numbers differ from aggregate calculation'
     for metric, filename, title in [('total_input','total-input','Total input'), ('uncached_input','uncached-input','Uncached input')]:
         row = '| '+title+' | '+' | '.join(whole(Decimal(a[metric+'_sum'])/a['sessions']) for a in data['arms'])+' |'
-        assert row in readme, 'README table differs from aggregate calculation'
+        assert row in readme and row in pypi, 'README table differs from aggregate calculation'
         path = ROOT/'docs/figures'/f'{filename}.svg'
         expected = render(data, metric).encode()
         if args.check:
@@ -66,7 +77,7 @@ def main():
         else:
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_bytes(expected)
-    print('Public means, README table, qualifications and two SVGs checked.' if args.check else 'Rendered two public SVGs.')
+    print('Public means, both README tables, derived percentages, paired interval and two SVGs checked.' if args.check else 'Rendered two public SVGs.')
 
 
 if __name__ == '__main__':

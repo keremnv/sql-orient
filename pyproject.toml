@@ -6,12 +6,16 @@ build-backend = "setuptools.build_meta"
 name = "sql-orient"
 version = "0.2.0"
 description = "Read-only SQL over external Graphify code relationships, with optional SCIP"
-readme = "README.md"
+readme = "PYPI_README.md"
 requires-python = ">=3.10"
 authors = [{ name = "keremnv" }]
 license = "Apache-2.0"
 license-files = ["LICENSE", "NOTICE", "ATTRIBUTION.md"]
 dependencies = []
+
+[project.urls]
+Repository = "https://github.com/keremnv/sql-orient"
+Documentation = "https://github.com/keremnv/sql-orient/tree/main/docs"
 
 [project.scripts]
 sql-orient = "sql_orient.__main__:main"

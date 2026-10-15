@@ -1,4 +1,4 @@
-include README.md LICENSE NOTICE ATTRIBUTION.md CONTRIBUTING.md .gitignore
+include README.md PYPI_README.md LICENSE NOTICE ATTRIBUTION.md CONTRIBUTING.md .gitignore
 include .github/workflows/ci.yml
 recursive-include src/sql_orient *.py
 recursive-include tests *.py *.json

@@ -26,7 +26,10 @@ NODE = {'id': 'n1', 'label': 'f()', 'source_file': 'mod_a.py', 'source_location'
     (b'{"nodes":[],"links":{}}', 'links must be an array of objects', type(None)),
     (json.dumps({'nodes': [NODE, NODE]}).encode(), r'nodes[2]: UNIQUE', sqlite3.IntegrityError),
     (json.dumps({'nodes': [dict(NODE, source_file={'x': 1})]}).encode(), 'nodes[1]:', sqlite3.Error),
-    (json.dumps({'nodes': [NODE], 'links': [{'source': ['n1']}]}).encode(), 'links[1]:', sqlite3.Error),
+    (json.dumps({'nodes': [NODE], 'links': [{'source': 'n1', 'target': 'n1', 'context': {'x': 1}}]}).encode(),
+     'links[1]:', sqlite3.Error),
+    (json.dumps({'nodes': [NODE], 'edges': [{'source': 'n1', 'target': 'n1', 'context': {'x': 1}}]}).encode(),
+     'edges[1]:', sqlite3.Error),
     (b'{"hyperedges":5}', 'hyperedges must be an array', type(None)),
     (b'{"graph":[]}', 'graph must be an object', type(None)),
 ])

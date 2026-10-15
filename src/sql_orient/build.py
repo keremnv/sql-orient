@@ -67,6 +67,12 @@ EDGE_COLS = {'source', 'target', 'relation', 'context', 'source_file', 'source_l
 OCC_COLS = {'range', 'symbol', 'symbol_roles', 'enclosing_range'}
 
 
+def edge_array(graph: dict) -> tuple[str, list]:
+    """Return the relationship array and its key; load_graph() rejects differing duplicates."""
+    key = 'links' if 'links' in graph or 'edges' not in graph else 'edges'
+    return key, graph.get(key, [])
+
+
 def load_graph(path: str) -> dict:
     """Load Graphify JSON; expected input failures are RuntimeErrors with chained causes."""
     hint = 'supply a valid Graphify graph.json export'
@@ -82,10 +88,21 @@ def load_graph(path: str) -> dict:
         raise RuntimeError(f'Graphify input {path!r}: JSON input is not valid UTF-8; {hint}') from exc
     if not isinstance(graph, dict):
         raise RuntimeError(f'Graphify input {path!r}: expected a JSON object; {hint}')
-    for key in ('nodes', 'links'):
+    for key in ('nodes', 'links', 'edges'):
         items = graph.get(key, [])
         if not isinstance(items, list) or not all(isinstance(item, dict) for item in items):
             raise RuntimeError(f'Graphify input {path!r}: {key} must be an array of objects; {hint}')
+    # Clustered exports store relationships under `links`; raw `--no-cluster` exports use `edges`.
+    if 'links' in graph and 'edges' in graph and graph['links'] != graph['edges']:
+        raise RuntimeError(f'Graphify input {path!r}: links and edges both present but differ; '
+                           f'supply one relationship array; {hint}')
+    key, edges = edge_array(graph)
+    for number, edge in enumerate(edges, 1):
+        for field in ('source', 'target'):
+            if not isinstance(edge.get(field), str):
+                raise RuntimeError(f'Graphify input {path!r}: {key}[{number}].{field} must be a string; {hint}')
+        if 'relation' in edge and not isinstance(edge['relation'], str):
+            raise RuntimeError(f'Graphify input {path!r}: {key}[{number}].relation must be a string; {hint}')
     # Optional members, when present, must keep their Graphify types; hyperedges are only counted.
     if not isinstance(graph.get('graph', {}), dict):
         raise RuntimeError(f'Graphify input {path!r}: graph must be an object; {hint}')
@@ -130,8 +147,9 @@ def build(repo: str, graph_path: str, scip_path: str | None, db_path: str,
                            (node.get('id'), node.get('label'), node.get('source_file'),
                             node.get('source_location'), node.get('file_type'),
                             node.get('community'), json.dumps(rest, sort_keys=True)))
-            for number, link in enumerate(graph.get('links', []), 1):
-                item = 'links', number
+            edge_key, edges = edge_array(graph)
+            for number, link in enumerate(edges, 1):
+                item = edge_key, number
                 rest = {k: v for k, v in link.items() if k not in EDGE_COLS}
                 db.execute('INSERT INTO g_edges(source,target,relation,context,source_file,'
                            'source_location,attrs) VALUES (?,?,?,?,?,?,?)',
