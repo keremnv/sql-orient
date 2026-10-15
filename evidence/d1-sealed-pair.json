@@ -1,0 +1,36 @@
+{
+  "format_version": 1,
+  "study": "D1 sealed pair",
+  "population": "Two separate D1 coding sessions (one Native Graphify, one sql_orient) run before the 36-session replication. Not part of the replication sample.",
+  "status": "Illustrative mechanism observation of model-visible delivery shapes. The two sessions asked different questions; this is not an equal-question benchmark. Sanitized counts only; verbatim questions, SQL and delivered lines are withheld pending review. Pending independent scientific and privacy review before publication.",
+  "questions_identical": false,
+  "native_graphify": {
+    "first_operation": {
+      "tool": "query_graph",
+      "nodes_displayed": 196,
+      "relationship_lines": 0,
+      "truncated": true
+    },
+    "refinement": {
+      "tool": "get_neighbors",
+      "relationship_lines": 11,
+      "text_bytes": 1000,
+      "truncated": false,
+      "ledger_qualified_relationships": 2
+    }
+  },
+  "sql_orient": {
+    "operation": "one SQL query: edge JOIN with a keyword predicate and LIMIT 40",
+    "rows_delivered": 40,
+    "json_bytes": 3723,
+    "columns_delivered": ["source label", "relation", "target label", "source file"],
+    "endpoint_ids_delivered": false,
+    "sql_limit": 40
+  },
+  "definitions": {
+    "nodes_displayed": "Node entries shown in the tool response delivered to the model.",
+    "relationship_lines": "Relationship lines shown in the tool response delivered to the model.",
+    "ledger_qualified_relationships": "Delivered relationships that match the study's frozen 48-edge task-relevance ledger.",
+    "json_bytes": "UTF-8 bytes of the bounded JSON response delivered to the model."
+  }
+}

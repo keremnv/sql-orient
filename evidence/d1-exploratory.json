@@ -1,0 +1,90 @@
+{
+  "format_version": 1,
+  "study": "D1",
+  "population": "Owner-amended D1 set: the same 12 paired blocks and 36 sessions summarized in d1.json (12 sessions per arm).",
+  "status": "Descriptive and post hoc. Not the preregistered comparison, which remains unidentified. Sanitized aggregates only; pending independent scientific and privacy review before publication.",
+  "arms": [
+    {
+      "label": "Source-only",
+      "sessions": 12,
+      "mean_session_cache_hit_share": 0.9439,
+      "model_calls_sum": 305,
+      "inspection_command_output_bytes_sum": 2432361,
+      "median_first_appearance_call_range": [2, 4]
+    },
+    {
+      "label": "Native Graphify",
+      "sessions": 12,
+      "mean_session_cache_hit_share": 0.9342,
+      "model_calls_sum": 284,
+      "inspection_command_output_bytes_sum": 2273340,
+      "median_first_appearance_call_range": [2, 4],
+      "approximate_carried_output_tokens_per_session": {
+        "index": 100151,
+        "test": 137009
+      }
+    },
+    {
+      "label": "sql_orient",
+      "sessions": 12,
+      "mean_session_cache_hit_share": 0.9371,
+      "model_calls_sum": 265,
+      "inspection_command_output_bytes_sum": 2353280,
+      "median_first_appearance_call_range": [2, 3],
+      "approximate_carried_output_tokens_per_session": {
+        "index": 25797,
+        "test": 60720
+      }
+    }
+  ],
+  "paired_blocks_lower": {
+    "total_input_sql_orient_below_native_graphify": 9,
+    "uncached_input_sql_orient_below_native_graphify": 11,
+    "uncached_input_sql_orient_below_source_only": 5
+  },
+  "wall_time_paired_intervals_include_zero": true,
+  "sql_orient_sessions": {
+    "sessions": 12,
+    "one_cli_sql_query": 12,
+    "single_hop_edge_join": 12,
+    "keyword_predicate": 12,
+    "rows_delivered": 12
+  },
+  "key_functions_tracked": 7,
+  "session_elapsed_relative_change_nominal_95_intervals": [
+    {
+      "comparison": "Native Graphify / Source-only",
+      "interval": [
+        -0.22007456778852133,
+        0.15262883353893916
+      ]
+    },
+    {
+      "comparison": "sql_orient / Source-only",
+      "interval": [
+        -0.27248839955993703,
+        0.12666140477499138
+      ]
+    },
+    {
+      "comparison": "sql_orient / Native Graphify",
+      "interval": [
+        -0.1654634383013737,
+        0.09714330187041362
+      ]
+    }
+  ],
+  "definitions": {
+    "session_elapsed_seconds": "Supervisor monotonic elapsed seconds from immediately before agent subprocess launch through process exit and output-capture thread drainage. Includes startup, tool execution, provider/network waiting and capture overhead; excludes preparation, graph extraction/import, grading and gaps between sessions. Same boundary for all arms and replacements. The amended set uses 30 completed originals and six replacements; failed originals are not added to replacement durations.",
+    "session_elapsed_relative_change_nominal_95_intervals": "Retained analysis results over 12 amended paired blocks; dimensionless mean relative changes A/B - 1. A and B are named in comparison. Not intervals on raw ratios or seconds.",
+    "mean_session_cache_hit_share": "Mean over the arm's 12 sessions of cached input tokens divided by total input tokens, from provider usage records; rounded to four decimals. Not the ratio of arm-mean cached input to arm-mean total input.",
+    "uncached_input": "Total input tokens minus cached input tokens, per session.",
+    "model_calls_sum": "Model calls recorded per session, summed over the arm's 12 sessions.",
+    "inspection_command_output_bytes_sum": "Sum over each arm's 12 amended sessions of UTF-8 bytes in the entire captured aggregated_output of every completed command_execution event whose command text matches sed, rg, cat, head, find or ls at word boundaries. Repeated output, listings, failed-command diagnostics and mixed batches count, including test output in matching batches; no exit-code filter is applied. Unmatched commands, standalone test commands without a match, direct MCP responses and separate patch events are excluded. Private source_output_bytes maps to inspection_output_utf8_bytes. Not unique source bytes, files opened, reading effort or verified model-visible delivery. Replacements substitute for failed originals.",
+    "median_first_appearance_call_range": "For each of the 7 tracked task functions, the median model call at which its name first appeared in non-index tool output; the range of those medians across functions.",
+    "approximate_carried_output_tokens_per_session": "Post-hoc approximate ledger. Each session's cumulative input is decomposed into later input increases times the calls that resend them; increases are attributed to the producing actions in proportion to output size. Alignment fallbacks occur and one bundled native index output is over-attributed. Rounded to whole tokens. Not a causal decomposition.",
+    "paired_blocks_lower": "Number of the 12 blocks in which the first arm's session value was strictly lower than the second arm's.",
+    "wall_time_paired_intervals_include_zero": "All three nominal 95% t-intervals (11 degrees of freedom) for mean within-block relative change A/B - 1 in supervisor-measured agent-session elapsed seconds include zero. These are changes in ratios, not raw ratios or a speed-equivalence test.",
+    "sql_orient_sessions": "Counts over the 12 amended sql_orient sessions: exactly one CLI SQL query each; that query joined g_edges to g_nodes once per endpoint (single hop); it used a keyword LIKE predicate; and it delivered rows to the model."
+  }
+}

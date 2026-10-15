@@ -27,7 +27,11 @@ for path in sorted(ROOT.rglob('*.md')):
         assert not url.scheme and not target.startswith('/'), (path.name, target)
         dest = (path.parent/unquote(url.path)).resolve() if url.path else path
         assert dest.is_relative_to(ROOT) and (dest.is_file() or dest.is_dir()), (path.name, target)
-        if url.fragment:
+        if url.fragment and dest.suffix != '.md':
+            # GitHub source-line anchor, for example mod_b.py#L6: the line must exist.
+            line = re.fullmatch(r'L([1-9][0-9]*)', url.fragment)
+            assert line and int(line.group(1)) <= len(dest.read_text().splitlines()), (path.name, target)
+        elif url.fragment:
             heads = re.findall(r'^#+\s+(.+)$',dest.read_text(),re.M)
             slugs = [re.sub(r'[^\w\s-]','',h.lower()).replace(' ','-') for h in heads]
             assert unquote(url.fragment) in slugs, (path.name,target)
@@ -40,10 +44,10 @@ for path in (ROOT/'docs/figures').glob('*.svg'):
         assert not any(k.rsplit('}',1)[-1] == 'href' for k in element.attrib)
 # GitHub landing page embeds both public figures; the package description stands alone.
 readme = (ROOT/'README.md').read_text()
-for figure in ('docs/figures/total-input.svg', 'docs/figures/uncached-input.svg'):
+for figure in ('docs/figures/total-input.svg', 'docs/figures/uncached-input.svg', 'docs/figures/retrieval-delivery.svg'):
     assert re.search(r'!\[[^\]]+\]\(' + re.escape(figure) + r'\)', readme), f'README must embed {figure}'
 assert tomllib.loads((ROOT/'pyproject.toml').read_text())['project']['readme'] == 'PYPI_README.md'
 pypi = (ROOT/'PYPI_README.md').read_text()
 assert not [t for t in LINK.findall(pypi) if not t.startswith('https://')], 'PyPI README needs absolute https links only'
 assert '![' not in pypi and '<img' not in pypi, 'PyPI README must not depend on images'
-print(f'Documentation: {count} local links/fragments, two self-contained SVGs, README figures and a self-contained PyPI README passed.')
+print(f'Documentation: {count} local links/fragments, self-contained SVGs, three README figures and a self-contained PyPI README passed.')

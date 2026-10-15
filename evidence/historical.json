@@ -1,0 +1,85 @@
+{
+  "format_version": 1,
+  "status": "Selected historical observations, separate from D1. V4, V7 fixed checks and B1 are not pooled or a unified benchmark. Pending independent delta review and owner editorial approval. Counts and factual summaries only; no source, patches, queries or captures.",
+  "graphify_version": "0.9.80",
+  "v4": {
+    "population": "Selected historical coding tasks: one native-first and one SQL-first session per task. Descriptive single draws, not causal effects or estimated success rates.",
+    "httpx": {
+      "arms": [
+        {
+          "label": "Native Graphify",
+          "sessions": 1,
+          "cumulative_input_tokens": 907801,
+          "interrupted_and_resumed": true,
+          "passed_frozen_acceptance_checks": true
+        },
+        {
+          "label": "sql_orient",
+          "sessions": 1,
+          "cumulative_input_tokens": 956995,
+          "interrupted_and_resumed": false,
+          "passed_frozen_acceptance_checks": true
+        }
+      ],
+      "usage_definition": "Cumulative runtime-recorded provider input tokens, including repeated context. Unique response records count pre-failure input once in the interrupted and resumed native session."
+    },
+    "tenacity": {
+      "arms": [
+        {
+          "label": "Native Graphify",
+          "patches": 1,
+          "narrow_bug_oracle_checks": 1,
+          "narrow_bug_oracle_passed": 1,
+          "diagnostic_compatibility_checks": 2,
+          "diagnostic_compatibility_passed": 0
+        },
+        {
+          "label": "sql_orient",
+          "patches": 1,
+          "narrow_bug_oracle_checks": 1,
+          "narrow_bug_oracle_passed": 1,
+          "diagnostic_compatibility_checks": 2,
+          "diagnostic_compatibility_passed": 0
+        }
+      ],
+      "diagnostic_status": "Separate retrospective diagnostic: each final production patch with original tests and the unchanged frozen oracle overlay. Does not replace frozen grading. The original native broader-suite result had test-overlay collection interference. These are regressions in agent-authored patches, not upstream defects."
+    }
+  },
+  "v7_fixed_check": {
+    "population": "One selected cross-file dispatch task in evaluator-authored, oracle-assisted fixed checks. No consumer sessions; not an agent outcome or a recall benchmark.",
+    "native": {
+      "initial_relevant_navigation_candidates": 12,
+      "reformulated_relevant_navigation_candidates": 42,
+      "module_mediated_navigation_recorded": true
+    },
+    "broad_structural_sql": {
+      "max_bytes": 262144,
+      "edge_rows_emitted": 709,
+      "seed_node_rows_emitted": 0,
+      "more_rows": true,
+      "limit_reason": "max_bytes"
+    },
+    "qualification": "Native reformulation and direct navigation supply useful candidates/path information; broad edge-first SQL withholds seed-node rows at its serialized UTF-8 byte cap. Different response populations; neither establishes complete dispatch behavior."
+  },
+  "b1": {
+    "population": "Five deliberately selected historical relationship questions, with preserved native records and analyst-designed scoped SQL; two supporting cases below. Reuses historical evidence, including V4 and V7 records, rather than adding independent agent trials.",
+    "selected_questions": 5,
+    "cattrs": {
+      "required_stored_navigation_relationships": 4,
+      "native_initial_selected": 4,
+      "native_initial_emitted": 0,
+      "native_preserved_responses_emitted": 0,
+      "focused_sql_required_relationships_emitted": 4,
+      "broad_sql_required_relationships_emitted": 2,
+      "broad_sql_byte_cap": 262144
+    },
+    "httpx": {
+      "required_stored_navigation_relationships": 1,
+      "native_initial_selected": 1,
+      "native_initial_emitted": 0,
+      "native_after_refinement_emitted": 1,
+      "scoped_sql_contains_all_required": true
+    },
+    "qualification": "Case-specific necessary navigation subsets, not pooled recall. Focused SQL is analyst-designed and source-informed, not observed unfamiliar-agent formulation. Native refinement is also successful. Emitted output is distinct from verified model delivery. Stored relationships do not establish behavior, source completeness or avoided source reads."
+  }
+}

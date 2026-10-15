@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="702" viewBox="0 0 600 702" role="img" aria-labelledby="title desc">
+<title id="title">Same facts, different delivery</title>
+<desc id="desc">query_graph displayed 196 nodes, no relationships, truncated. Native refinement delivered 11 relationships in 1,000 text bytes. SQL delivered 40 rows in 3,723 JSON bytes; labels and file provenance, no IDs. Separate sealed pair; different questions, not an equal-question comparison. Replication estimated carried index output: Graphify 100,151, sql_orient 25,797 tokens/session. Approximate post-hoc attribution.</desc>
+<g font-family="DejaVu Sans, Arial, sans-serif">
+<rect width="600" height="702" fill="#fff"/>
+<text x="28" y="42" font-size="28" fill="#0f172a" font-weight="700" text-anchor="start">Same facts, different delivery</text>
+<text x="28" y="78" font-size="22" fill="#475569" font-weight="400" text-anchor="start">Preserved D1 sealed pair · before replication</text>
+<text x="28" y="112" font-size="22" fill="#0f172a" font-weight="700" text-anchor="start">Different queries; not a matched test.</text>
+<rect x="28" y="137" width="544" height="184" rx="8" fill="#f8fafc" stroke="#b45309" stroke-width="2"/>
+<text x="44" y="171" font-size="25" fill="#b45309" font-weight="700" text-anchor="start">Native Graphify</text>
+<text x="44" y="205" font-size="21" fill="#0f172a" font-weight="400" text-anchor="start">query_graph → neighborhood → node list</text>
+<text x="44" y="236" font-size="21" fill="#0f172a" font-weight="400" text-anchor="start">196 nodes · 0 relationships · truncated</text>
+<text x="44" y="267" font-size="21" fill="#0f172a" font-weight="400" text-anchor="start">Then get_neighbors → 11 relationships</text>
+<text x="44" y="298" font-size="21" fill="#0f172a" font-weight="400" text-anchor="start">1,000 bytes of text · no truncation</text>
+<rect x="28" y="337" width="544" height="184" rx="8" fill="#f8fafc" stroke="#1d4ed8" stroke-width="2"/>
+<text x="44" y="371" font-size="25" fill="#1d4ed8" font-weight="700" text-anchor="start">sql_orient</text>
+<text x="44" y="405" font-size="21" fill="#0f172a" font-weight="400" text-anchor="start">SQL → edge JOIN + predicate → chosen rows</text>
+<text x="44" y="436" font-size="21" fill="#0f172a" font-weight="400" text-anchor="start">40 relationship rows · 3,723 bytes of JSON</text>
+<text x="44" y="467" font-size="21" fill="#0f172a" font-weight="400" text-anchor="start">Source + target labels, relation, source file</text>
+<text x="44" y="498" font-size="21" fill="#0f172a" font-weight="400" text-anchor="start">SQL LIMIT bounds rows; no IDs delivered</text>
+<text x="28" y="565" font-size="22" fill="#0f172a" font-weight="700" text-anchor="start">Replication: carried index output (approx.)</text>
+<text x="28" y="601" font-size="24" fill="#b45309" font-weight="400" text-anchor="start">Native Graphify: 100,151 tokens/session</text>
+<text x="28" y="635" font-size="24" fill="#1d4ed8" font-weight="700" text-anchor="start">sql_orient: 25,797 tokens/session</text>
+<text x="28" y="676" font-size="22" fill="#475569" font-weight="400" text-anchor="start">Post hoc attribution; not a full causal explanation.</text>
+</g>
+</svg>

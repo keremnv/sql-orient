@@ -1,0 +1,20 @@
+{
+  "format_version": 1,
+  "status": "Separate optional-use cohorts, not D1 and not pooled with each other. Agents could use an index but were not required to. Sanitized counts only; pending independent scientific and privacy review before publication.",
+  "cohorts": [
+    {
+      "label": "18-session three-arm pilot",
+      "indexed_sessions": 12,
+      "sessions_with_any_index_operation": 0
+    },
+    {
+      "label": "V7 exploratory completion",
+      "indexed_sessions": 6,
+      "sessions_with_any_index_operation": 0
+    }
+  ],
+  "definitions": {
+    "indexed_sessions": "Sessions in which a native Graphify or sql_orient index was available to the agent.",
+    "sessions_with_any_index_operation": "Indexed sessions in which the agent made at least one index tool call or SQL execution."
+  }
+}
